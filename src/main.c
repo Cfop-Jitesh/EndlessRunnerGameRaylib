@@ -19,7 +19,7 @@ int main(){
     while(!started){  //Loop for main menu
         ;
     }
-    while(started){ //Loop for actual game
+    while(started && !WindowShouldClose()){ //Loop for actual game
         BeginDrawing();
         ClearBackground(RAYWHITE);
         EndDrawing();
