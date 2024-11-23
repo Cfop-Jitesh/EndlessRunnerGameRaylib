@@ -1,9 +1,9 @@
 //Libraries
 #include <raylib.h>
 #include <stdlib.h>
-#include "../include/game.h"
-#include "../include/input.h"
-#include "../include/render.h"
+#include "../include/gameMechanics.h"
+#include "../include/animations.h"
+#include "../include/renderTerrain.h"
 
 //Main Function
 int main(){
