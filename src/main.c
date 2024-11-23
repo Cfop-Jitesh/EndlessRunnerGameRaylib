@@ -12,7 +12,7 @@ int main(){
     const int screenHeight = 600; // Screen height
 
     // Initialize the window
-    InitWindow(screenWidth, screenHeight, "Raylib Game");
+    InitWindow(screenWidth, screenHeight, "Runner");
 
     // Set the target FPS (frames per second)
     SetTargetFPS(60);
