@@ -14,6 +14,6 @@ typedef struct Player{
 
 
 //Functions
-void changePlayerState(Player* player);
+void changePlayerState(Player* player, int runningFrameCount, int currentRunningFrame);
 void PlayerMovement(Player* player);
 #endif

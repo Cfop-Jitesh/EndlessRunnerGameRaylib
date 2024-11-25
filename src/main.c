@@ -1,6 +1,6 @@
 //Libraries
 #include <raylib.h>
-#include <stdlib.h>
+#include <stdio.h>
 #include "../include/gameMechanics.h"
 #include "../include/animations.h"
 #include "../include/renderTerrain.h"
@@ -10,6 +10,7 @@ int main(){
     bool started = true;
     const int screenWidth = 800;  // Screen width
     const int screenHeight = 600; // Screen height
+    int currentRunningFrame = 1;
     Player player ={
         .isJumping = false,
         .isRunning = false,
@@ -17,12 +18,14 @@ int main(){
         .position = {0, 450},
         .vel = 2.5
     };
+    int runningFrameCount = 0;
     // Initialize the window
     InitWindow(screenWidth, screenHeight, "Runner");
 
 
     //Textures
     Texture2D IdleMan = LoadTexture("assets/idle.png");
+    Texture2D runningSpriteSheet = LoadTexture("assets/Run.PNG");
 
     // Set the target FPS (frames per second)
     SetTargetFPS(60);
@@ -30,11 +33,20 @@ int main(){
         ;
     }
     while(started && !WindowShouldClose()){ //Loop for actual game
-        changePlayerState(&player);
+        if(player.isRunning){
+            runningFrameCount+=1;
+            UpdateFrame(&runningFrameCount, &currentRunningFrame);
+            DrawSprite(runningSpriteSheet, currentRunningFrame, player);
+        }
+        else if(!player.isRunning){
+            DrawIdleMan(IdleMan, player);
+        }
+        changePlayerState(&player, runningFrameCount, currentRunningFrame);
+        printf("CurrentFrame: %d\n", currentRunningFrame);
+        printf("Frame: %d\n", runningFrameCount);
         PlayerMovement(&player);
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        DrawIdleMan(IdleMan, player);
         EndDrawing();
     }
     CloseWindow();
