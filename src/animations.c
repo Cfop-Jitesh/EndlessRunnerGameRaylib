@@ -18,12 +18,12 @@ void UpdateFrame(int* frameCount, int* currentFrame){
     }
 }
 
-void DrawSprite(Texture2D spriteSheet, int spriteIndex, Player player) {
+void DrawSprite(Texture2D spriteSheet, int spriteIndex, Player player,Vector2 ScreenPlayerPosition) {
     // Define sprite dimensions
     int spriteH = 0+(32*spriteIndex);
     Rectangle source = {spriteH, spriteH+32, 32, 32};
     Rectangle dest = {
-        .x = player.position.x,
+        .x = ScreenPlayerPosition.x,
         .y = player.position.y,
         .height = 114,
         .width = 114

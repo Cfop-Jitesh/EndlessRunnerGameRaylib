@@ -7,5 +7,5 @@
 // Function to draw idle animation of the player
 void DrawIdleMan(Texture2D t, Player player);
 void UpdateFrame(int* frameCount, int* currentFrame);
-void DrawSprite(Texture2D spriteSheet, int spriteIndex, Player player);
+void DrawSprite(Texture2D spriteSheet, int spriteIndex, Player player, Vector2 ScreenPlayerPosition);
 #endif
