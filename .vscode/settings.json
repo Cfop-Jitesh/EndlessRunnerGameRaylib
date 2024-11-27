@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "gamemechanics.h": "c"
+        "gamemechanics.h": "c",
+        "math.h": "c",
+        "stdio.h": "c"
     }
 }

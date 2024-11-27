@@ -33,3 +33,10 @@ void DrawSprite(Texture2D spriteSheet, int spriteIndex, Player player,Vector2 Sc
 
 }
 
+void renderBox(box* boxes[], Texture2D t){
+    int i = 0;
+    if(i<TOTAL_BOX){
+        DrawTextureEx(t, boxes[i]->position, 0.0f, 4.0, WHITE);
+        i+=1;
+    }
+}

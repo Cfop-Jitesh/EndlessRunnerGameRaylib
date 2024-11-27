@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 #include "../include/gameMechanics.h"
 #include "../include/animations.h"
 #include "../include/renderTerrain.h"
@@ -19,7 +20,8 @@ int main(){
         .position = {0, 450},
         .vel = 2.5
     };
-    
+    box* boxes[TOTAL_BOX] = {NULL};
+
     int runningFrameCount = 0;
     // Initialize the window
     InitWindow(screenWidth, screenHeight, "Runner");
@@ -29,14 +31,14 @@ int main(){
     Texture2D IdleMan = LoadTexture("assets/idle.png");
     Texture2D runningSpriteSheet = LoadTexture("assets/Run.PNG");
     Texture2D Background = LoadTexture("assets/peakpx.png");
-
+    Texture2D Box = LoadTexture("assets/box.png");
 
     //Camera 
     Camera2D camera = {0};
     camera.target = player.position;
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
-    camera.offset = (Vector2){ screenWidth / 2.0f, screenHeight / 2.0f };
+    camera.offset = (Vector2){ screenWidth / 2.0f-375, screenHeight / 2.0f };
     Vector2 screenPlayerPosition = {
         camera.offset.x, // Keep the player horizontally fixed
         player.position.y // Use the actual Y position
@@ -48,9 +50,13 @@ int main(){
     }
     while(started && !WindowShouldClose()){ //Loop for actual game
         camera.target = player.position;
-        printf("Player Position: (%f, %f)\n", player.position.x, player.position.y);
-        printf("Camera Target: (%f, %f)\n", camera.target.x, camera.target.y);
-
+        summoningBox(boxes);
+        
+        changePlayerState(&player, runningFrameCount, currentRunningFrame);
+        PlayerMovement(&player);
+        BeginDrawing();
+        ClearBackground(BROWN);
+        DrawTexture(Background, 0, 0, WHITE);
         if(player.isRunning){
             runningFrameCount+=1;
             UpdateFrame(&runningFrameCount, &currentRunningFrame);
@@ -59,22 +65,17 @@ int main(){
         else if(!player.isRunning){
             DrawIdleMan(IdleMan, player);
         }
-        changePlayerState(&player, runningFrameCount, currentRunningFrame);
-        PlayerMovement(&player);
-        BeginDrawing();
-        ClearBackground(BROWN);
+        renderBox(boxes, Box);
         BeginMode2D(camera);
         // Calculate the background's scrolling offset based on the player's position
-        float bgX = fmod(player.position.x, Background.width);
-        
-        // Draw the background twice to ensure seamless looping
-        DrawTexture(Background, -bgX, 0, WHITE); 
-        DrawTexture(Background, -bgX + Background.width, 0, WHITE);
-
-
         EndMode2D();
         EndDrawing();
     }
+    free(boxes);
+    for (int i = 0; i < TOTAL_BOX; i++) {
+        free(boxes[i]); // Free each allocated box
+    }
+
     CloseWindow();
     return 0;
 }
